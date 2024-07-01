@@ -1,8 +1,9 @@
 # JSON Code for the data pipeline which can be used in Fabric Data Factory.
+# My Personal Data Factory settings are scrambled.
 
 {
     "name": "bing_news",
-    "objectId": "13777003-5aad-483e-9d20-88b557c668bf",
+    "objectId": "16547003-5aad-483e-9d20-88b66g7668bf",
     "properties": {
         "activities": [
             {
@@ -23,7 +24,7 @@
                         "requestInterval": "00.00:00:00.010",
                         "requestMethod": "GET",
                         "additionalHeaders": {
-                            "Ocp-Apim-Subscription-Key": "c8e30a945723476581ba58fa45d753a3"
+                            "Ocp-Apim-Subscription-Key": "c8e30a9457e8y56392ba58fa4f9751a3"
                         },
                         "paginationRules": {
                             "supportRFC5988": "true"
@@ -36,7 +37,7 @@
                             },
                             "schema": [],
                             "externalReferences": {
-                                "connection": "31ab0a1a-b567-4a2a-8ec1-e42728c436fd"
+                                "connection": "31ab0a2aa-b567-4a2a-5i92-e42728c436fd"
                             }
                         }
                     },
@@ -56,8 +57,8 @@
                                     "annotations": [],
                                     "type": "Lakehouse",
                                     "typeProperties": {
-                                        "workspaceId": "9a7e0483-f099-4633-84bd-1059c3683d26",
-                                        "artifactId": "4d925880-0687-476a-8889-63574bd1cf40",
+                                        "workspaceId": "9a893t483-f099-4633-84bd-1059c3683d26",
+                                        "artifactId": "4d925880-0687-476a-8889-637r9ebd1cf40",
                                         "rootFolder": "Files"
                                     }
                                 }
@@ -101,8 +102,8 @@
                     "secureInput": false
                 },
                 "typeProperties": {
-                    "notebookId": "ae36af8e-7568-4f14-b324-c6484592c50b",
-                    "workspaceId": "9a7e0483-f099-4633-84bd-1059c3683d26"
+                    "notebookId": "aeed0f8e-7568-4f14-471w-c6484cv4c50b",
+                    "workspaceId": "9a3ri483-f099-4633-84bd-10599s683d26"
                 }
             },
             {
@@ -124,12 +125,12 @@
                     "secureInput": false
                 },
                 "typeProperties": {
-                    "notebookId": "d81de51b-165b-427e-8d9d-4a69ebd9d011",
-                    "workspaceId": "9a7e0483-f099-4633-84bd-1059c3683d26"
+                    "notebookId": "d81ke51b-165b-427e-8d9d-4aio9bd9d011",
+                    "workspaceId": "9a7e0483-f099-4633-84bd-1059c368ty66"
                 }
             }
         ],
-        "lastModifiedByObjectId": "1e187e37-7d0e-4f45-bcbc-ca62a0637adb",
+        "lastModifiedByObjectId": "1e1jk737-7d0e-4f45-bcbc-ca62aty54adb",
         "lastPublishTime": "2024-07-01T10:55:14Z"
     }
 }
