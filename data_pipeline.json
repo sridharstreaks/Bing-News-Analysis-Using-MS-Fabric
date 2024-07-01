@@ -1,0 +1,135 @@
+# JSON Code for the data pipeline which can be used in Fabric Data Factory.
+
+{
+    "name": "bing_news",
+    "objectId": "13777003-5aad-483e-9d20-88b557c668bf",
+    "properties": {
+        "activities": [
+            {
+                "name": "bing_data",
+                "type": "Copy",
+                "dependsOn": [],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "typeProperties": {
+                    "source": {
+                        "type": "RestSource",
+                        "httpRequestTimeout": "00:01:40",
+                        "requestInterval": "00.00:00:00.010",
+                        "requestMethod": "GET",
+                        "additionalHeaders": {
+                            "Ocp-Apim-Subscription-Key": "c8e30a945723476581ba58fa45d753a3"
+                        },
+                        "paginationRules": {
+                            "supportRFC5988": "true"
+                        },
+                        "datasetSettings": {
+                            "annotations": [],
+                            "type": "RestResource",
+                            "typeProperties": {
+                                "relativeUrl": "?q=stock+market+tomorrow&count=100&freshness=Day&mkt=en-IN"
+                            },
+                            "schema": [],
+                            "externalReferences": {
+                                "connection": "31ab0a1a-b567-4a2a-8ec1-e42728c436fd"
+                            }
+                        }
+                    },
+                    "sink": {
+                        "type": "JsonSink",
+                        "storeSettings": {
+                            "type": "LakehouseWriteSettings"
+                        },
+                        "formatSettings": {
+                            "type": "JsonWriteSettings"
+                        },
+                        "datasetSettings": {
+                            "annotations": [],
+                            "linkedService": {
+                                "name": "bing_lake_db",
+                                "properties": {
+                                    "annotations": [],
+                                    "type": "Lakehouse",
+                                    "typeProperties": {
+                                        "workspaceId": "9a7e0483-f099-4633-84bd-1059c3683d26",
+                                        "artifactId": "4d925880-0687-476a-8889-63574bd1cf40",
+                                        "rootFolder": "Files"
+                                    }
+                                }
+                            },
+                            "type": "Json",
+                            "typeProperties": {
+                                "location": {
+                                    "type": "LakehouseLocation",
+                                    "fileName": {
+                                        "value": "@concat('bing_news_data_', formatDateTime(convertFromUtc(utcnow(), 'India Standard Time'), 'yyyy-MM-dd_HH_mm'),'.json')",
+                                        "type": "Expression"
+                                    },
+                                    "folderPath": {
+                                        "value": "@concat(formatDateTime(convertFromUtc(utcNow(), 'India Standard Time'), 'yyyy-MM-dd'),'/',formatDateTime(convertFromUtc(utcNow(), 'India Standard Time'), 'HH'))",
+                                        "type": "Expression"
+                                    }
+                                }
+                            },
+                            "schema": {}
+                        }
+                    },
+                    "enableStaging": false
+                }
+            },
+            {
+                "name": "raw_data_loader",
+                "type": "TridentNotebook",
+                "dependsOn": [
+                    {
+                        "activity": "bing_data",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "typeProperties": {
+                    "notebookId": "ae36af8e-7568-4f14-b324-c6484592c50b",
+                    "workspaceId": "9a7e0483-f099-4633-84bd-1059c3683d26"
+                }
+            },
+            {
+                "name": "sentiment_analysis",
+                "type": "TridentNotebook",
+                "dependsOn": [
+                    {
+                        "activity": "raw_data_loader",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "typeProperties": {
+                    "notebookId": "d81de51b-165b-427e-8d9d-4a69ebd9d011",
+                    "workspaceId": "9a7e0483-f099-4633-84bd-1059c3683d26"
+                }
+            }
+        ],
+        "lastModifiedByObjectId": "1e187e37-7d0e-4f45-bcbc-ca62a0637adb",
+        "lastPublishTime": "2024-07-01T10:55:14Z"
+    }
+}
